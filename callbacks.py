@@ -5,6 +5,7 @@ from dash.dependencies import Input, Output, State
 from app import app,server
 import requests
 from pages.event_entry import times_map
+from pages import schedule
 
 def link_valid(link):
     try:
@@ -65,3 +66,8 @@ def store_event(n_clicks,artist,link,description,date,time,duration):
         )
         db.commit()
         return(['Event submitted!'])
+
+@app.callback(Output('event-schedule', 'children'),
+              [Input('interval-component', 'n_intervals')])
+def update_schedule(n):
+    return schedule.schedule()

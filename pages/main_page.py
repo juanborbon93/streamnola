@@ -29,7 +29,7 @@ jumbo_header = dbc.Jumbotron(
 
 content = dcc.Tabs(
     children = [
-        dcc.Tab(label='STREAM SCHEDULE', value='schedule',children = schedule.schedule()),
+        dcc.Tab(label='STREAM SCHEDULE', value='schedule',children = html.Div(schedule.schedule()),id='event-schedule'),
         dcc.Tab(label='ADD EVENT',value='add',children=[messages.event_instructions]+[event_entry.event_entry()])
     ],
     value = 'schedule'
@@ -40,6 +40,11 @@ layout = html.Div(
     [
         dbc.Row(jumbo_header),
         content,
-        dcc.Store(id='calendar-data')
+        dcc.Store(id='calendar-data'),
+        dcc.Interval(
+            id='interval-component',
+            interval=60*1000,
+            n_intervals=0
+        )
     ]
 )
